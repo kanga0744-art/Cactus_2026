@@ -104,7 +104,7 @@ export default function App() {
                   </div>
                   <div className="flex items-center gap-1.5 text-sun-500">
                     <Wallet className="w-3 h-3" />
-                    <span className="text-[10px] font-mono font-bold">{balance ?? 0}</span>
+                    <span className="text-[9px] font-mono font-bold">{balance ?? 0}</span>
                   </div>
                 </motion.div>
               )}
@@ -166,10 +166,10 @@ export default function App() {
                         <div className="w-1.5 h-1.5 rounded-full bg-sun-500 animate-pulse" />
                       </div>
                       <div className="flex items-baseline gap-1.5 mt-0.5">
-                        <span className="text-2xl font-mono font-bold text-sun-500 leading-none">
+                        <span className="text-lg font-mono font-bold text-sun-500 leading-none">
                           {balance ?? 0}
                         </span>
-                        <span className="text-[9px] font-bold text-cactus-400 uppercase tracking-widest">Pollen</span>
+                        <span className="text-[8px] font-bold text-cactus-400 uppercase tracking-widest">Pollen</span>
                       </div>
                     </div>
                   </motion.div>

@@ -150,16 +150,16 @@ export function Generator({ apiKey }: GeneratorProps) {
                 className="flex flex-col items-center justify-center text-cactus-300 p-8 text-center max-w-md"
               >
                 <motion.div 
-                  animate={{ y: [0, -10, 0] }}
+                  animate={{ y: [0, -6, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                  className="w-24 h-24 md:w-32 md:h-32 bg-cactus-800/40 rounded-full flex items-center justify-center mb-6 md:mb-10 border-2 border-white/10 shadow-2xl"
+                  className="w-12 h-12 md:w-16 md:h-16 bg-cactus-800/40 rounded-full flex items-center justify-center mb-3 md:mb-5 border-2 border-white/10 shadow-2xl"
                 >
-                  <ImageIcon className="w-10 h-10 md:w-16 md:h-16 text-sun-500 opacity-60" />
+                  <ImageIcon className="w-6 h-6 md:w-8 md:h-8 text-sun-500 opacity-60" />
                 </motion.div>
-                <h3 className="text-xl md:text-3xl font-display font-bold text-white mb-3 md:mb-4 uppercase tracking-[0.2em] drop-shadow-lg">
+                <h3 className="text-base md:text-lg font-display font-bold text-white mb-2 md:mb-3 uppercase tracking-[0.2em] drop-shadow-lg">
                   Start Creating
                 </h3>
-                <p className="text-sm md:text-lg opacity-70 leading-relaxed font-medium">
+                <p className="text-[10px] md:text-xs opacity-70 leading-relaxed font-medium">
                   Unleash your imagination. Describe your vision below and watch the magic happen.
                 </p>
               </motion.div>
@@ -196,11 +196,11 @@ export function Generator({ apiKey }: GeneratorProps) {
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/[0.08] backdrop-blur-2xl border-2 border-white/20 rounded-[24px] md:rounded-[48px] shadow-none z-30 shrink-0 p-3 md:p-8"
+          className="bg-white/[0.08] backdrop-blur-2xl border-2 border-white/20 rounded-[24px] md:rounded-[48px] shadow-none z-30 shrink-0 p-3 md:p-6"
         >
-          <div className="max-w-5xl mx-auto w-full flex flex-col gap-3 md:gap-6">
-             {/* Prompt Input */}
-             <div className="relative w-full flex gap-2 md:gap-4">
+          <div className="max-w-5xl mx-auto w-full flex flex-col md:flex-row gap-3 md:gap-4 items-stretch">
+             {/* Prompt Input & Desktop Button */}
+             <div className="relative w-full flex gap-2 md:gap-4 flex-1">
               <div className="relative flex-1">
                 <input
                   type="text"
@@ -208,7 +208,7 @@ export function Generator({ apiKey }: GeneratorProps) {
                   onChange={(e) => setPrompt(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && generateImage()}
                   placeholder="Describe your imagination..."
-                  className="w-full bg-cactus-900/50 border-2 border-white/10 rounded-[16px] md:rounded-[32px] py-3 md:py-6 pl-5 md:pl-10 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:border-sun-500/50 transition-all shadow-inner text-sm md:text-xl font-medium"
+                  className="w-full bg-cactus-900/50 border-2 border-white/10 rounded-[16px] md:rounded-[32px] py-3 md:py-4 pl-5 md:pl-8 pr-4 text-white placeholder:text-white/30 focus:outline-none focus:border-sun-500/50 transition-all shadow-inner text-sm md:text-lg font-medium"
                 />
               </div>
               
@@ -220,18 +220,30 @@ export function Generator({ apiKey }: GeneratorProps) {
               >
                 <SlidersHorizontal className="w-5 h-5" />
               </motion.button>
+
+              {/* Main Action Button (Desktop) */}
+              <motion.button
+                whileHover={{ scale: 1.02, y: -1 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={generateImage}
+                disabled={isGenerating || !prompt}
+                className="hidden md:flex bg-sun-500 text-cactus-900 font-black uppercase tracking-[0.15em] px-6 py-3.5 rounded-[24px] hover:bg-sun-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed items-center justify-center gap-2 group shadow-xl shadow-sun-500/20 text-[11px] whitespace-nowrap"
+              >
+                <span>{isGenerating ? 'Generating...' : 'Ignite'}</span>
+                {!isGenerating && <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
+              </motion.button>
             </div>
 
-            {/* Main Action Button */}
+            {/* Main Action Button (Mobile) */}
             <motion.button
               whileHover={{ scale: 1.01, y: -2 }}
               whileTap={{ scale: 0.98 }}
               onClick={generateImage}
               disabled={isGenerating || !prompt}
-              className="w-full bg-sun-500 text-cactus-900 font-black uppercase tracking-[0.1em] md:tracking-[0.3em] py-3 md:py-6 rounded-[16px] md:rounded-[32px] hover:bg-sun-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 md:gap-4 group shadow-xl shadow-sun-500/30 text-xs md:text-xl"
+              className="md:hidden w-full bg-sun-500 text-cactus-900 font-black uppercase tracking-[0.1em] py-3 rounded-[16px] hover:bg-sun-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 group shadow-xl shadow-sun-500/30 text-xs"
             >
               <span>{isGenerating ? 'Generating...' : 'Ignite Imagination'}</span>
-              {!isGenerating && <ArrowRight className="w-5 h-5 md:w-8 md:h-8 group-hover:translate-x-3 transition-transform" />}
+              {!isGenerating && <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />}
             </motion.button>
           </div>
         </motion.div>
