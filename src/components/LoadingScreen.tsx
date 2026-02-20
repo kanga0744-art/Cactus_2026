@@ -21,12 +21,18 @@ export const LoadingScreen: React.FC<{ onComplete: () => void }> = ({ onComplete
 
   return (
     <motion.div
-      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-cactus-800 text-white"
+      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#2d4a3d] text-white overflow-hidden"
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.8, ease: "easeInOut" }}
     >
-      <div className="relative w-48 h-48 mb-4">
+      {/* Background Blobs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-sun-500/20 blur-[140px] rounded-full animate-pulse" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[70%] h-[70%] bg-cactus-300/15 blur-[180px] rounded-full" />
+      </div>
+
+      <div className="relative w-48 h-48 mb-4 z-10">
         <svg viewBox="0 0 200 200" className="w-full h-full overflow-visible">
           {/* Pot */}
           <motion.path

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Settings, X, Key, Save, User, Wallet, Loader2 } from 'lucide-react';
+import { X, Key, Save } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface SettingsModalProps {
@@ -11,41 +11,13 @@ interface SettingsModalProps {
 
 export function SettingsModal({ isOpen, onClose, apiKey, setApiKey }: SettingsModalProps) {
   const [localKey, setLocalKey] = useState(apiKey);
-  const [profile, setProfile] = useState<any>(null);
-  const [balance, setBalance] = useState<any>(null);
-  const [loadingProfile, setLoadingProfile] = useState(false);
 
   useEffect(() => {
     setLocalKey(apiKey);
-    if (isOpen && apiKey) {
-      fetchAccountInfo(apiKey);
-    }
-  }, [apiKey, isOpen]);
-
-  const fetchAccountInfo = async (key: string) => {
-    setLoadingProfile(true);
-    try {
-      const [profileRes, balanceRes] = await Promise.all([
-        fetch('https://gen.pollinations.ai/account/profile', {
-          headers: { Authorization: `Bearer ${key}` }
-        }),
-        fetch('https://gen.pollinations.ai/account/balance', {
-          headers: { Authorization: `Bearer ${key}` }
-        })
-      ]);
-
-      if (profileRes.ok) setProfile(await profileRes.json());
-      if (balanceRes.ok) setBalance(await balanceRes.json());
-    } catch (e) {
-      console.error("Failed to fetch account info", e);
-    } finally {
-      setLoadingProfile(false);
-    }
-  };
+  }, [apiKey]);
 
   const handleSave = () => {
     setApiKey(localKey);
-    if (localKey) fetchAccountInfo(localKey);
     onClose();
   };
 
@@ -79,35 +51,6 @@ export function SettingsModal({ isOpen, onClose, apiKey, setApiKey }: SettingsMo
             </div>
 
             <div className="space-y-6">
-              {/* Account Info Section */}
-              {apiKey && (
-                <div className="bg-cactus-900/50 rounded-2xl p-4 border border-white/5 space-y-3">
-                  <h3 className="text-xs font-bold text-cactus-300 uppercase tracking-wider mb-2">Account Info</h3>
-                  {loadingProfile ? (
-                    <div className="flex items-center justify-center py-4">
-                      <Loader2 className="w-5 h-5 text-sun-500 animate-spin" />
-                    </div>
-                  ) : (
-                    <>
-                      <div className="flex justify-between items-center text-sm">
-                        <div className="flex items-center gap-2 text-white">
-                          <User className="w-4 h-4 text-cactus-300" />
-                          <span>{profile?.name || 'Unknown User'}</span>
-                        </div>
-                        <span className="text-xs bg-white/10 px-2 py-1 rounded text-cactus-200 uppercase">{profile?.tier || 'Free'}</span>
-                      </div>
-                      <div className="flex justify-between items-center text-sm">
-                        <div className="flex items-center gap-2 text-white">
-                          <Wallet className="w-4 h-4 text-cactus-300" />
-                          <span>Balance</span>
-                        </div>
-                        <span className="font-mono text-sun-500">{balance?.balance ?? 0} Pollen</span>
-                      </div>
-                    </>
-                  )}
-                </div>
-              )}
-
               <div>
                 <label className="block text-xs font-bold text-cactus-300 uppercase tracking-wider mb-3">
                   API Key (Optional)

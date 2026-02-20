@@ -33,11 +33,17 @@ export function ModelSelector({ selectedModel, onSelectModel }: ModelSelectorPro
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    // ... fetchModels logic remains same ...
     const fetchModels = async () => {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
+
       try {
         // Use the simple endpoint requested
-        const response = await fetch('https://gen.pollinations.ai/image/models');
+        const response = await fetch('https://gen.pollinations.ai/image/models', {
+          signal: controller.signal
+        });
+        
+        clearTimeout(timeoutId);
         
         if (!response.ok) throw new Error('Failed to fetch models');
         
