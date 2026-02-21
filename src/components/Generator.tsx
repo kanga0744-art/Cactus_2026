@@ -5,9 +5,10 @@ import { ModelSelector } from './ModelSelector';
 
 interface GeneratorProps {
   apiKey: string;
+  onSuccess?: () => void;
 }
 
-export function Generator({ apiKey }: GeneratorProps) {
+export function Generator({ apiKey, onSuccess }: GeneratorProps) {
   const [prompt, setPrompt] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -72,6 +73,7 @@ export function Generator({ apiKey }: GeneratorProps) {
       const objectUrl = URL.createObjectURL(blob);
       
       setImageUrl(objectUrl);
+      if (onSuccess) onSuccess();
     } catch (err: any) {
       console.error("Generation error:", err);
       setError(err.message || "Failed to generate image. Please try again.");
@@ -180,7 +182,7 @@ export function Generator({ apiKey }: GeneratorProps) {
 
           {/* Loading Overlay */}
           {isGenerating && (
-            <div className="absolute inset-0 bg-cactus-900/60 backdrop-blur-2xl flex flex-col items-center justify-center z-20 rounded-[32px] md:rounded-[56px]">
+            <div className="absolute inset-0 bg-cactus-900/80 backdrop-blur-2xl flex flex-col items-center justify-center z-20 rounded-[32px] md:rounded-[56px]">
               <div className="relative">
                 <div className="w-20 h-20 border-4 border-white/10 border-t-sun-500 rounded-full animate-spin shadow-[0_0_20px_rgba(244,208,63,0.3)]"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -256,7 +258,7 @@ export function Generator({ apiKey }: GeneratorProps) {
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 250 }}
-              className="absolute inset-x-0 bottom-0 z-40 bg-cactus-900/98 backdrop-blur-3xl rounded-t-[48px] border-t-2 border-white/20 shadow-[0_-20px_60px_rgba(0,0,0,0.6)] md:hidden flex flex-col max-h-[85vh]"
+              className="absolute inset-x-0 bottom-0 z-40 bg-cactus-900/95 backdrop-blur-3xl rounded-t-[48px] border-t-2 border-white/20 shadow-[0_-20px_60px_rgba(0,0,0,0.6)] md:hidden flex flex-col max-h-[85vh]"
             >
               <div className="p-8 space-y-8 overflow-y-auto">
                 <div className="flex items-center justify-between">
@@ -318,7 +320,7 @@ export function Generator({ apiKey }: GeneratorProps) {
       <motion.div 
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
-        className="hidden lg:flex w-80 bg-white/[0.08] backdrop-blur-2xl border-2 border-white/20 rounded-[40px] md:rounded-[56px] flex-col z-20 shadow-none overflow-hidden"
+        className="hidden lg:flex w-80 bg-cactus-900/40 backdrop-blur-2xl border-2 border-white/20 rounded-[40px] md:rounded-[56px] flex-col z-20 shadow-none overflow-hidden"
       >
         <div className="p-8 md:p-10 space-y-10 overflow-y-auto custom-scrollbar h-full">
           <div className="flex items-center gap-4 text-sun-500 mb-2 border-b-2 border-white/5 pb-6">

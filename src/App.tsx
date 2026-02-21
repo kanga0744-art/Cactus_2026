@@ -52,12 +52,12 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#2d4a3d] flex items-center justify-center font-sans overflow-hidden relative">
+    <div className="min-h-screen bg-cactus-900 flex items-center justify-center font-sans overflow-hidden relative">
       {/* Atmospheric Background Blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-5%] left-[-5%] w-[70%] h-[70%] bg-sun-500/30 blur-[160px] rounded-full animate-pulse" />
-        <div className="absolute bottom-[-5%] right-[-5%] w-[80%] h-[80%] bg-cactus-300/25 blur-[200px] rounded-full" />
-        <div className="absolute top-1/4 right-1/4 w-[40%] h-[40%] bg-sun-600/20 blur-[120px] rounded-full animate-bounce duration-[10s]" />
+        <div className="absolute top-[-5%] left-[-5%] w-[70%] h-[70%] bg-sun-500/20 blur-[160px] rounded-full animate-pulse" />
+        <div className="absolute bottom-[-5%] right-[-5%] w-[80%] h-[80%] bg-clay-500/15 blur-[200px] rounded-full" />
+        <div className="absolute top-1/4 right-1/4 w-[40%] h-[40%] bg-sand-500/10 blur-[120px] rounded-full animate-bounce duration-[10s]" />
         <motion.div 
           animate={{ rotate: 360 }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
@@ -104,7 +104,7 @@ export default function App() {
                   </div>
                   <div className="flex items-center gap-1.5 text-sun-500">
                     <Wallet className="w-3 h-3" />
-                    <span className="text-[9px] font-mono font-bold">{balance ?? 0}</span>
+                    <span className="text-[8px] font-mono font-bold">{balance ?? 0}</span>
                   </div>
                 </motion.div>
               )}
@@ -165,11 +165,11 @@ export default function App() {
                         </div>
                         <div className="w-1.5 h-1.5 rounded-full bg-sun-500 animate-pulse" />
                       </div>
-                      <div className="flex items-baseline gap-1.5 mt-0.5">
-                        <span className="text-lg font-mono font-bold text-sun-500 leading-none">
+                      <div className="flex items-baseline gap-1 mt-0.5">
+                        <span className="text-base font-mono font-bold text-sun-500 leading-none">
                           {balance ?? 0}
                         </span>
-                        <span className="text-[8px] font-bold text-cactus-400 uppercase tracking-widest">Pollen</span>
+                        <span className="text-[7px] font-bold text-cactus-400 uppercase tracking-widest">Pollen</span>
                       </div>
                     </div>
                   </motion.div>
@@ -177,9 +177,23 @@ export default function App() {
               </div>
 
               {/* Footer / Credits */}
-              <div className="hidden md:flex flex-col gap-4 text-[9px] uppercase tracking-[0.3em] text-cactus-300/50 text-vertical mt-8">
-                <span>Inspired by Nature</span>
-                <span>Powered by Pollinations.ai</span>
+              <div className="hidden md:flex flex-col gap-6 mt-8">
+                {/* Palette Status Indicator */}
+                <div className="flex flex-col gap-2">
+                  <span className="text-[8px] font-black uppercase tracking-[0.4em] text-cactus-300/40 mb-1">Palette Status</span>
+                  <div className="flex gap-1.5">
+                    <div className="w-3 h-3 rounded-full bg-cactus-900 border border-white/5" title="Obsidian" />
+                    <div className="w-3 h-3 rounded-full bg-cactus-300 border border-white/5" title="Sage" />
+                    <div className="w-3 h-3 rounded-full bg-sun-500 border border-white/5" title="Gold" />
+                    <div className="w-3 h-3 rounded-full bg-sand-500 border border-white/5" title="Sand" />
+                    <div className="w-3 h-3 rounded-full bg-clay-500 border border-white/5" title="Clay" />
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-4 text-[9px] uppercase tracking-[0.3em] text-cactus-300/50 text-vertical">
+                  <span>Inspired by Nature</span>
+                  <span>Powered by Pollinations.ai</span>
+                </div>
               </div>
               
               {/* Mobile Menu Button */}
@@ -205,7 +219,10 @@ export default function App() {
                 </motion.button>
               </div>
 
-              <Generator apiKey={apiKey} />
+              <Generator 
+                apiKey={apiKey} 
+                onSuccess={() => apiKey && fetchAccountInfo(apiKey)} 
+              />
             </main>
 
             {/* Modals */}
