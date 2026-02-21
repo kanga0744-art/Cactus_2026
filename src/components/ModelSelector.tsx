@@ -182,47 +182,47 @@ export function ModelSelector({ selectedModel, onSelectModel }: ModelSelectorPro
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full bg-cactus-900/50 border border-white/10 rounded-xl py-3 px-4 text-left flex items-center justify-between hover:bg-cactus-900/70 transition-colors"
+        className="w-full bg-paper-100/80 backdrop-blur-sm border border-nordic-blue/20 rounded-sm py-4 px-6 text-left flex items-center justify-between hover:bg-nordic-blue/10 transition-all book-shadow"
       >
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-sun-500/20 flex items-center justify-center text-sun-500">
+        <div className="flex items-center gap-4">
+          <div className="w-10 h-10 rounded-full bg-pastel-blue/10 flex items-center justify-center text-pastel-blue border border-pastel-blue/20">
             <Zap className="w-4 h-4" />
           </div>
           <div>
-            <div className="text-xs text-cactus-300 uppercase tracking-wider font-bold">Model</div>
-            <div className="text-white font-medium">{selectedModelData?.description || selectedModel}</div>
+            <div className="text-[8px] text-nordic-dark/30 uppercase tracking-[0.4em] font-black">Model</div>
+            <div className="text-nordic-dark text-[11px] font-bold">{selectedModelData?.description || selectedModel}</div>
           </div>
         </div>
-        <Filter className="w-4 h-4 text-cactus-300" />
+        <Filter className="w-3.5 h-3.5 text-nordic-dark/20" />
       </button>
 
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="w-full mt-2 bg-cactus-800 border border-white/10 rounded-2xl shadow-inner overflow-hidden flex flex-col max-h-[300px]"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="absolute left-0 right-0 mt-3 bg-white border border-nordic-dark/10 rounded-sm shadow-2xl overflow-hidden flex flex-col max-h-[340px] z-50 page-texture"
           >
             {/* Header / Search */}
-            <div className="p-4 border-b border-white/10 space-y-3">
+            <div className="p-5 border-b border-nordic-dark/5 space-y-4">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-cactus-300" />
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-nordic-dark/20" />
                   <input
                     type="text"
                     placeholder="Search models..."
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    className="w-full bg-cactus-900/50 border border-white/10 rounded-lg py-2 pl-9 pr-3 text-sm text-white placeholder:text-cactus-300/50 focus:outline-none focus:border-sun-500/50"
+                    className="w-full bg-paper-100 border border-nordic-dark/5 rounded-sm py-3 pl-10 pr-4 text-xs text-nordic-dark placeholder:text-nordic-dark/20 focus:outline-none focus:border-nordic-dark/10"
                   />
                 </div>
                 <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
                   <button
                     onClick={() => toggleFilter('all')}
-                    className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider whitespace-nowrap transition-colors ${
+                    className={`px-4 py-1.5 rounded-full text-[8px] font-black uppercase tracking-[0.3em] whitespace-nowrap transition-all ${
                       filters.length === 0
-                        ? 'bg-sun-500 text-cactus-900' 
-                        : 'bg-cactus-900/50 text-cactus-300 hover:bg-cactus-900'
+                        ? 'bg-nordic-dark text-white' 
+                        : 'bg-paper-100 text-nordic-dark/30 hover:bg-paper-100'
                     }`}
                   >
                     All
@@ -231,10 +231,10 @@ export function ModelSelector({ selectedModel, onSelectModel }: ModelSelectorPro
                     <button
                       key={f}
                       onClick={() => toggleFilter(f)}
-                      className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider whitespace-nowrap transition-colors ${
+                      className={`px-4 py-1.5 rounded-full text-[8px] font-black uppercase tracking-[0.3em] whitespace-nowrap transition-all ${
                         filters.includes(f)
-                          ? 'bg-sun-500 text-cactus-900' 
-                          : 'bg-cactus-900/50 text-cactus-300 hover:bg-cactus-900'
+                          ? 'bg-nordic-dark text-white' 
+                          : 'bg-paper-100 text-nordic-dark/30 hover:bg-paper-100'
                       }`}
                     >
                       {f}
@@ -244,11 +244,11 @@ export function ModelSelector({ selectedModel, onSelectModel }: ModelSelectorPro
               </div>
 
               {/* List */}
-              <div className="overflow-y-auto flex-1 p-2 space-y-1">
+              <div className="overflow-y-auto flex-1 p-3 space-y-1 custom-scrollbar">
                 {loading ? (
-                  <div className="p-4 text-center text-cactus-300 text-xs">Loading models...</div>
+                  <div className="p-10 text-center text-nordic-dark/20 text-[9px] uppercase tracking-[0.5em] font-black">Loading models...</div>
                 ) : filteredModels.length === 0 ? (
-                  <div className="p-4 text-center text-cactus-300 text-xs">No models found</div>
+                  <div className="p-10 text-center text-nordic-dark/20 text-[9px] uppercase tracking-[0.5em] font-black">No models found</div>
                 ) : (
                   filteredModels.map((model) => (
                     <button
@@ -257,29 +257,29 @@ export function ModelSelector({ selectedModel, onSelectModel }: ModelSelectorPro
                         onSelectModel(model.name);
                         setIsOpen(false);
                       }}
-                      className={`w-full p-3 rounded-xl flex items-center justify-between group transition-colors ${
+                      className={`w-full p-4 rounded-sm flex items-center justify-between group transition-all ${
                         selectedModel === model.name
-                          ? 'bg-sun-500/10 border border-sun-500/50'
-                          : 'hover:bg-white/5 border border-transparent'
+                          ? 'bg-paper-100 border-l-4 border-nordic-dark'
+                          : 'hover:bg-paper-50 border-l-4 border-transparent'
                       }`}
                     >
-                      <div className="flex items-center gap-3 text-left">
-                        <div className={`w-2 h-2 rounded-full ${model.successRate && model.successRate > 90 ? 'bg-green-500' : 'bg-red-500'}`} />
+                      <div className="flex items-center gap-4 text-left">
+                        <div className={`w-1.5 h-1.5 rounded-full ${model.successRate && model.successRate > 90 ? 'bg-pastel-blue' : 'bg-pastel-rose'}`} />
                         <div>
-                          <div className={`font-bold text-sm ${selectedModel === model.name ? 'text-sun-500' : 'text-white'}`}>
+                          <div className={`font-black text-[10px] uppercase tracking-[0.2em] ${selectedModel === model.name ? 'text-nordic-dark' : 'text-nordic-dark/60'}`}>
                             {model.name}
                           </div>
-                          <div className="text-[10px] text-cactus-300 flex items-center gap-2">
+                          <div className="text-[8px] text-nordic-dark/30 flex items-center gap-3 font-bold mt-1">
                             <span>{model.avgResponseTime}s</span>
                             <span>•</span>
-                            <span className="flex items-center gap-1">
-                              {model.currency === 'diamond' ? <Diamond className="w-3 h-3 text-blue-400" /> : <Flower className="w-3 h-3 text-pink-400" />}
+                            <span className="flex items-center gap-1.5">
+                              {model.currency === 'diamond' ? <Diamond className="w-2.5 h-2.5 text-pastel-blue" /> : <Flower className="w-2.5 h-2.5 text-pastel-rose" />}
                               {model.price === 0 ? 'Free' : model.price}
                             </span>
                           </div>
                         </div>
                       </div>
-                      {selectedModel === model.name && <Check className="w-4 h-4 text-sun-500" />}
+                      {selectedModel === model.name && <Check className="w-3.5 h-3.5 text-nordic-dark" />}
                     </button>
                   ))
                 )}
